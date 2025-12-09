@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface Article {
-    id: number;
+    articleId: number;
     title: string;
     content: string;
     comments: Comment[];
@@ -25,5 +25,10 @@ export class BlogService {
     getArticles() {
         return this.http.get(this.url);
     }
+
+    createArticle(article: Article) {
+        return this.http.post(this.url, article);
+    }
+
 
 }

@@ -1,1 +1,20 @@
-<p>blog works!</p>
+<form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+    <label for="title">Title:</label>
+    <input id="title" name="title" formControlName="title" required />
+
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" formControlName="content" required></textarea>
+
+    <button type="submit">Create Article</button>
+</form>
+
+<div class="flex flex-row gap-2">
+@for (article of articleList; track article.articleId) {
+<div class="flex border-2 border-gray-300 rounded-md p-4">
+    <p>ID: {{ article.articleId }}</p>
+    <h2>Title: {{ article.title }}</h2>
+    <p>Content: {{ article.content }}</p>
+    <hr />
+</div>
+}
+</div>

@@ -1,4 +1,5 @@
-import { Component, inject, AfterViewInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { BlogService } from './blog.service';
 import { tap } from 'rxjs/internal/operators/tap';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
@@ -6,7 +7,7 @@ import { Article } from './blog.service';
 
 @Component({
   selector: 'app-blog',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './blog.html',
   styleUrl: './blog.css',
 })
@@ -15,7 +16,7 @@ export class Blog {
   private blogService = inject(BlogService);
   private fb = inject(FormBuilder);
 
-  articleList: Article[] = [];
+  articles$ = this.blogService.getArticles()
 
   articleForm: FormGroup = this.fb.group({
     title: [''],
@@ -30,20 +31,13 @@ export class Blog {
     })
   }
 
-  getArticles() {
-    return this.blogService.getArticles()
-    .pipe(tap(article => this.articleList = article as Article []))
-    .subscribe({
-      error: (error) => console.error('error', error),
-      complete: () => console.log('Articles fetched successfully'),
-    });
-  }
-  
-  ngOnInit() {
-    this.getArticles();
-  }
+  // getArticles() {
+  //   return this.blogService.getArticles()
+  //   .pipe(tap(article => this.articleList = article as Article []))
+  //   .subscribe({
+  //     error: (error) => console.error('error', error),
+  //     complete: () => console.log('Articles fetched successfully'),
+  //   });
+  // }
 
-  AfterViewInit() { 
-    console.log(this.articleList);
-  }
 }

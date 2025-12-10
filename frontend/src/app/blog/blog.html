@@ -8,13 +8,12 @@
     <button type="submit">Create Article</button>
 </form>
 
-<div class="flex flex-row gap-2">
-@for (article of articleList; track article.articleId) {
-<div class="flex border-2 border-gray-300 rounded-md p-4">
-    <p>ID: {{ article.articleId }}</p>
-    <h2>Title: {{ article.title }}</h2>
-    <p>Content: {{ article.content }}</p>
-    <hr />
+<div class="flex flex-col gap-2">
+@for (article of articles$ | async; track article.articleId) {
+<div class="flex-col border-2 border-gray-300 rounded-md p-4">
+    <p><strong>ID:</strong> {{ article.articleId }}</p>
+    <h2><strong>Title:</strong> {{ article.title }}</h2>
+    <p><strong>Content:</strong> {{ article.content }}</p>
 </div>
 }
 </div>

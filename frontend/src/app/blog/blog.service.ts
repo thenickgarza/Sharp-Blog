@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/internal/Observable';
 
 export interface Article {
     articleId: number;
@@ -22,8 +23,8 @@ export class BlogService {
     http = inject(HttpClient)
     url = 'http://localhost:5000/api/articles';
 
-    getArticles() {
-        return this.http.get(this.url);
+    getArticles(): Observable<Article[]> {
+        return this.http.get<Article[]>(this.url);
     }
 
     createArticle(article: Article) {
